@@ -1,0 +1,7 @@
+server:
+  port: 17003
+
+hbase.zookeeper.quorum: master,slave1,slave2
+hbase.zookeeper.port: 2181
+hbase.zookeeper.znode: /hbase
+hbase.client.keyvalue.maxsize: 1572864000

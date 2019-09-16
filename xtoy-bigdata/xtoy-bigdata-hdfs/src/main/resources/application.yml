@@ -1,0 +1,6 @@
+server:
+  port: 17001
+
+hadoop:
+  name-node: hdfs://master:9000
+  namespace: /xtoy
