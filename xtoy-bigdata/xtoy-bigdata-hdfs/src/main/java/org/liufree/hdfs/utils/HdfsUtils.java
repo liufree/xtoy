@@ -197,6 +197,7 @@ public class HdfsUtils {
             // 返回FileSystem对象
             FileSystem fs = getFileSystem(hdfsUri);
             // 获取分布式文件系统
+
             DistributedFileSystem hdfs = (DistributedFileSystem)fs;
             dataNodeStats = hdfs.getDataNodeStats();
         } catch (IOException e) {

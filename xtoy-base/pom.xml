@@ -12,7 +12,7 @@
     <artifactId>xtoy-base</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>xtoy-base-aop</module>
+
     </modules>
 
 

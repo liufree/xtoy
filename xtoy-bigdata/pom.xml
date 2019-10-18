@@ -25,7 +25,10 @@
         <module>xtoy-bigdata-spark</module>
         <module>xtoy-bigdata-hdfs</module>
         <module>xtoy-bigdata-hive</module>
+        <module>xtoy-bigdata-flink</module>
+        <module>xtoy-bigdata-phoenix</module>
     </modules>
+
 
     <dependencies>
         <dependency>

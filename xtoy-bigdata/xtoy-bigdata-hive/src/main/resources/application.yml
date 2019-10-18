@@ -2,7 +2,7 @@ server:
   port: 17002
 
 hive:
-  url: jdbc:hive2://master:10000/hive
+  url: jdbc:hive2://host:10000/hive
   driver-class-name: org.apache.hive.jdbc.HiveDriver
   type: com.alibaba.druid.pool.DruidDataSource
   user: liufree
@@ -27,6 +27,6 @@ hive:
   maxPoolPreparedStatementPerConnectionSize: 20
 
 
-hadoop.name-node: hdfs://master:9000
+hadoop.name-node: hdfs://host:9000
 hadoop.namespace: /xtoy
 

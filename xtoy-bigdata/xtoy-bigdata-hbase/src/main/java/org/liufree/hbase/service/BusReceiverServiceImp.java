@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -32,15 +33,19 @@ public class BusReceiverServiceImp implements BusReceiverService {
     @Override
     public void createTable() {
         String[] familys = {"base", "extends"};
-        TableName tableName = TableName.valueOf("nias:bus_receiver");
-        hbaseUtil.createTable("nias:bus_receiver", familys);
+        TableName tableName = TableName.valueOf("xtoy:bus_receiver");
+        try {
+            hbaseUtil.createTable("xtoy:bus_receiver", familys);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         log.info("创建表成功");
     }
 
     @Override
     public void save(BusReceiverEntity busReceiverEntity) {
         createTable();
-        HQuery hQuery = new HQuery("hbase:namespace", String.valueOf(busReceiverEntity.getId()));
+        HQuery hQuery = new HQuery("xtoy:bus_receiver", String.valueOf(busReceiverEntity.getId()));
         hQuery.getColumns().add(new HBaseColumn("base", "name", busReceiverEntity.getName(), busReceiverEntity.getId()));
         hQuery.getColumns().add(new HBaseColumn("base", "regionCode", busReceiverEntity.getRegionCode(), busReceiverEntity.getId()));
         hQuery.getColumns().add(new HBaseColumn("extends", "address", busReceiverEntity.getAddress(), busReceiverEntity.getId()));
@@ -51,7 +56,7 @@ public class BusReceiverServiceImp implements BusReceiverService {
 
     @Override
     public void batchSave(List<BusReceiverEntity> list) {
-        HQuery hQuery = new HQuery("nias:bus_receiver");
+        HQuery hQuery = new HQuery("xtoy:bus_receiver");
         for (BusReceiverEntity busReceiverEntity : list) {
             hQuery.getColumns().add(new HBaseColumn("base", "name", busReceiverEntity.getName(), busReceiverEntity.getId()));
             hQuery.getColumns().add(new HBaseColumn("base", "regionCode", busReceiverEntity.getRegionCode(), busReceiverEntity.getId()));
@@ -64,7 +69,7 @@ public class BusReceiverServiceImp implements BusReceiverService {
 
     @Override
     public BusReceiverEntity queryByRowId(Serializable id) {
-        HQuery hQuery = new HQuery("nias:bus_receiver", id);
+        HQuery hQuery = new HQuery("xtoy:bus_receiver", id);
         BusReceiverEntity busReceiverEntity = hbaseUtil.get(hQuery, BusReceiverEntity.class);
         return busReceiverEntity;
     }

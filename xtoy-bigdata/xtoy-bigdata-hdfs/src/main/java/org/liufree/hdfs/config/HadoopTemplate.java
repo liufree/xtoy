@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -22,8 +23,16 @@ import java.io.IOException;
 public class HadoopTemplate {
 
 
+    /**
+     * 本地文件系统
+     */
     @Autowired
     private FileSystem fileSystem;
+    /**
+     * 分布式文件系统
+     */
+    @Autowired
+    private DistributedFileSystem distributedFileSystem;
 
     @Value("${hadoop.name-node}")
     private String nameNode;
@@ -114,9 +123,11 @@ public class HadoopTemplate {
         Path dstPath = new Path(destPath);
         // 实现文件上传
         try {
-            // 获取FileSystem对象
-            fileSystem.copyFromLocalFile(srcPath, dstPath);
-            fileSystem.copyFromLocalFile(delSrc, overwrite, srcPath, dstPath);
+            // 获取本地FileSystem对象
+            // fileSystem.copyFromLocalFile(srcPath, dstPath);
+            // fileSystem.copyFromLocalFile(delSrc, overwrite, srcPath, dstPath);
+            //获取分布式文件系统
+            distributedFileSystem.copyFromLocalFile(srcPath, dstPath);
             //释放资源
             //    fileSystem.close();
         } catch (IOException e) {

@@ -19,9 +19,7 @@
     </properties>
 
     <dependencies>
-
-
-        <!--hbase-->
+        <!--这里应该用Hbase2.2.1的包，但是不兼容-->
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
@@ -44,6 +42,8 @@
                     <artifactId>elasticsearch</artifactId>
                 </exclusion>
             </exclusions>
+
+
         </dependency>
 
         <dependency>
@@ -57,13 +57,149 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.liufree</groupId>
-            <artifactId>xtoy-base-aop</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
 
+        <!--
+        <dependency>
+            <groupId>org.apache.hbase.thirdparty</groupId>
+            <artifactId>hbase-shaded-protobuf</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        &lt;!&ndash; Intra-project dependencies &ndash;&gt;
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-annotations</artifactId>
+            <version>2.2.1</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-common</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-hadoop-compat</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-hadoop2-compat</artifactId>
+            <version>2.2.1</version>
+            <exclusions>
+                &lt;!&ndash; We don't need MR support classes here. &ndash;&gt;
+                <exclusion>
+                    <groupId>org.apache.hadoop</groupId>
+                    <artifactId>hadoop-mapreduce-client-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-common</artifactId>
+            <version>2.2.1</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-protocol-shaded</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-protocol</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        &lt;!&ndash; General dependencies &ndash;&gt;
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.13</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase.thirdparty</groupId>
+            <artifactId>hbase-shaded-miscellaneous</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase.thirdparty</groupId>
+            <artifactId>hbase-shaded-netty</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.5.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.htrace</groupId>
+            <artifactId>htrace-core4</artifactId>
+            <version>4.2.0-incubating</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jruby.jcodings</groupId>
+            <artifactId>jcodings</artifactId>
+            <version>1.0.44</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jruby.joni</groupId>
+            <artifactId>joni</artifactId>
+            <version>2.1.29</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-crypto</artifactId>
+            <version>1.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.java.dev.jna</groupId>
+                    <artifactId>jna</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
 
     </dependencies>
 

@@ -3,11 +3,13 @@ package org.liufree.hive.dao;
 
 import org.liufree.entity.BusReceiverEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class BusReceiverServiceImp implements BusReceiverService {
         hiveJdbcTemplate.update("insert into bus_receiver(id,name,address,en_name,member_family) values(?,?,?,?,?)",
                 new PreparedStatementSetter() {
                     @Override
-                    public void setValues(java.sql.PreparedStatement ps) throws SQLException {
+                    public void setValues(PreparedStatement ps) throws SQLException {
                         ps.setLong(1, busReceiverEntity.getId());
                         ps.setString(2, busReceiverEntity.getName());
                         ps.setString(3, busReceiverEntity.getAddress());
@@ -71,7 +73,7 @@ public class BusReceiverServiceImp implements BusReceiverService {
 
     @Override
     public List<BusReceiverEntity> getAll() {
-        String sql = "select * from bus_receiver where id=621003188698349568";
+        String sql = "select * from bus_receiver";
         List<BusReceiverEntity> list = hiveJdbcTemplate.query(sql, new MyRowMapper());
         return list;
     }

@@ -3,16 +3,15 @@ package org.liufree.hbase.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.Admin;
-import org.apache.hadoop.hbase.client.HTableInterface;
-import org.apache.hadoop.hbase.client.Put;
-import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.hadoop.hbase.HbaseTemplate;
@@ -38,19 +37,16 @@ public class HbaseUtil {
      * @param tableName
      * @param familys
      */
-    public  void createTable(String tableName,String[] familys){
-        try{
-            TableName table = TableName.valueOf(tableName);
-            if (hBaseAdmin.tableExists(table)) {
-                log.info("table[{}] already exists!",tableName);
-            } else {
-                HTableDescriptor tableDesc = new HTableDescriptor(table);
-                for (int i = 0; i < familys.length; i++) {
-                    tableDesc.addFamily(new HColumnDescriptor(familys[i]));
-                }
-                hBaseAdmin.createTable(tableDesc);
+    public  void createTable(String tableName,String[] familys) throws IOException {
+        TableName table = TableName.valueOf(tableName);
+        if (hBaseAdmin.tableExists(table)) {
+            log.info("table[{}] already exists!",tableName);
+        } else {
+            HTableDescriptor tableDesc = new HTableDescriptor(table);
+            for (int i = 0; i < familys.length; i++) {
+                tableDesc.addFamily(new HColumnDescriptor(familys[i]));
             }
-        }catch (Exception e){
+            hBaseAdmin.createTable(tableDesc);
         }
     }
 
@@ -65,20 +61,15 @@ public class HbaseUtil {
             return null;
         }
         return hbaseTemplate.execute(query.getTable(), new TableCallback<Object>() {
-            @SuppressWarnings("deprecation")
             @Override
             public Object doInTable(HTableInterface table) throws Throwable {
-                try {
-                    byte[] rowkey = String.valueOf(query.getRow()).getBytes();
-                    Put put = new Put(rowkey);
-                    for(HBaseColumn col:query.getColumns()){
-                        put.addColumn(Bytes.toBytes(col.getFamily()), Bytes.toBytes(col.getQualifier()),
-                                Bytes.toBytes(col.getValue()));
-                    }
-                    table.put(put);
-                } catch (Exception e) {
-                    log.warn("==> hbase get object fail> "+query.getRow());
+                byte[] rowkey = String.valueOf(query.getRow()).getBytes();
+                Put put = new Put(rowkey);
+                for (HBaseColumn col : query.getColumns()) {
+                    put.addColumn(Bytes.toBytes(col.getFamily()), Bytes.toBytes(col.getQualifier()),
+                            Bytes.toBytes(col.getValue()));
                 }
+                table.put(put);
                 return null;
             }
         });
@@ -97,22 +88,18 @@ public class HbaseUtil {
                 table.setAutoFlush(false);
                 //设置数据缓存区域
                 table.setWriteBufferSize(64*1024*1024);
-                try {
-                    for(HBaseColumn col:query.getColumns()){
-                        byte[] rowkey = String.valueOf(col.getRowKey()).getBytes();
-                        Put put = new Put(rowkey);
-                        put.addColumn(Bytes.toBytes(col.getFamily()), Bytes.toBytes(col.getQualifier()),
-                                Bytes.toBytes(col.getValue()));
-                        table.put(put);
-                    }
-                    //刷新缓存区
-                    table.flushCommits();
-                    //关闭表连接
-                    table.close();
-                    //Thread.sleep(20000);
-                } catch (Exception e) {
-                    log.warn("==> hbase get object fail> "+query.getRow());
+                for(HBaseColumn col:query.getColumns()){
+                    byte[] rowkey = String.valueOf(col.getRowKey()).getBytes();
+                    Put put = new Put(rowkey);
+                    put.addColumn(Bytes.toBytes(col.getFamily()), Bytes.toBytes(col.getQualifier()),
+                            Bytes.toBytes(col.getValue()));
+                    table.put(put);
                 }
+                //刷新缓存区
+                table.flushCommits();
+                //关闭表连接
+                table.close();
+                //Thread.sleep(20000);
                 return null;
             }
         });
@@ -132,7 +119,8 @@ public class HbaseUtil {
         }
 
         return hbaseTemplate.get(query.getTable(), String.valueOf(query.getRow()), new RowMapper<T>() {
-            public T mapRow(Result result, int rowNum) throws Exception {
+            @Override
+            public T mapRow(Result result, int rowNum) throws IllegalAccessException, InstantiationException {
                 List<Cell> ceList = result.listCells();
                 T item=c.newInstance();
                 JSONObject obj = new JSONObject();
@@ -193,7 +181,7 @@ public class HbaseUtil {
 
         return hbaseTemplate.find(query.getTable(), query.getScan(), new RowMapper<T>() {
             @Override
-            public T mapRow(Result result, int rowNum) throws Exception {
+            public T mapRow(Result result, int rowNum) throws IllegalAccessException, InstantiationException {
 
                 List<Cell> ceList = result.listCells();
                 JSONObject obj = new JSONObject();

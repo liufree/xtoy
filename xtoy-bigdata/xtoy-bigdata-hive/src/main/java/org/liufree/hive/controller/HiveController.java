@@ -41,8 +41,10 @@ public class HiveController {
     @RequestMapping("/save/{count}")
     @CalTime
     public String save(@PathVariable int count){
-        BusReceiverEntity busReceiverEntity = NameBuildUtils.buildReceiver();
-        busReceiverService.insert(busReceiverEntity);
+        for (int i = 0; i < count; i++) {
+            BusReceiverEntity busReceiverEntity = NameBuildUtils.buildReceiver();
+            busReceiverService.insert(busReceiverEntity);
+        }
         return "save";
     }
 
