@@ -69,6 +69,7 @@ public class RddTestHdfs {
         JavaRDD<Integer> lineLengths = data2.map(s -> s.length());
         lineLengths.foreach(integer -> System.out.println("tellme" + integer));
         int totalLength = lineLengths.reduce((a, b) -> a + b);
+
         System.out.println(totalLength);
 
         //map,转换匹配

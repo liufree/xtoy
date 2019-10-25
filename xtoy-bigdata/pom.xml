@@ -27,6 +27,7 @@
         <module>xtoy-bigdata-hive</module>
         <module>xtoy-bigdata-flink</module>
         <module>xtoy-bigdata-phoenix</module>
+        <module>xtoy-bigdata-avro</module>
     </modules>
 
 
