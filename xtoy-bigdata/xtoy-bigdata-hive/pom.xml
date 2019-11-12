@@ -19,7 +19,7 @@
         <zookeeper.version>RELEASE</zookeeper.version>
         <curator.version>RELEASE</curator.version>
         <spring-data-hadoop.version>RELEASE</spring-data-hadoop.version>
-        <hive.version>1.2.1</hive.version> <!--1.2.1版本是对的，换成最新release版本会错误-->
+        <hive.version>2.3.4</hive.version> <!--1.2.1版本是对的，换成最新release版本会错误-->
         <druid.version>RELEASE</druid.version>
     </properties>
 
