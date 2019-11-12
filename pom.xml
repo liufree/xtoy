@@ -11,6 +11,8 @@
         <module>xtoy-bigdata</module>
         <module>xtoy-test</module>
         <module>xtoy-programming-language</module>
+        <module>xtoy-deeplearning</module>
+        <module>xtoy-ai</module>
     </modules>
     <packaging>pom</packaging>
 
