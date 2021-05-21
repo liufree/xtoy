@@ -11,7 +11,7 @@
 
     <artifactId>xtoy-bigdata-flink</artifactId>
     <properties>
-        <flink.version>1.9.0</flink.version>
+        <flink.version>1.9.2</flink.version>
         <scala.version>2.11.12</scala.version>
         <scala.binary.version>2.11</scala.binary.version>
     </properties>
